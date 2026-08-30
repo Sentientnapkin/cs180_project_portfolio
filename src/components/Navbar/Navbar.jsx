@@ -53,32 +53,12 @@ const Navbar = ({ toggleTheme, theme }) => {
     <header>
       <nav className="navbar">
         <div className="logo">
-          <h1>{logo}</h1>
+          
         </div>
-        {mobileMenu(toggleTheme, theme)}
+        
         {/* desktop menu */}
         <ul className="nav-list">
-          <li>
-            <a href="#projects">Projects</a>
-          </li>
-          <li>
-            <a href="#experience">Experience</a>
-          </li>
-          <li>
-            <a href="#skills">Skills</a>
-          </li>
-          <li>
-            <a href="#contact">Contact</a>
-          </li>
-          <li>
-            <a onClick={toggleTheme}>
-              {theme === "light" ? (
-                <MdNightlight className="icon" size={30} />
-              ) : (
-                <MdLightMode className="icon" size={30} />
-              )}
-            </a>
-          </li>
+          
         </ul>
       </nav>
     </header>

@@ -3,6 +3,9 @@
   --light-theme-color: #000000;
   --dark-theme-background: #000000;
   --dark-theme-color: rgb(255, 255, 255);
+  --wine: #722f37;
+  --burgundy: #6d0f2a;
+  --burgundy-dark: #4a0a1c;
 }
 
 .app {

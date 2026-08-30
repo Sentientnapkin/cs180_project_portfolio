@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import About from "./components/About/About";
-import Experience from "./components/Experience/Experience";
-import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import Projects from "./components/Projects/Projects";
-import Skills from "./components/Skills/Skills";
+import Proj0 from "./components/Projects/pages/Proj0/Proj0";
 import "./App.css";
-import Contact from "./components/Contact/Contact";
 const App = () => {
   const [theme, setTheme] = useState("light");
 
@@ -31,13 +29,19 @@ const App = () => {
     <div className="app" id={`${theme}`}>
       <main>
         <Navbar toggleTheme={toggleTheme} theme={theme} />
-        <About />
-        <Projects />
-        <Experience />
-        <Skills />
-        <Contact />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <About />
+                <Projects />
+              </>
+            }
+          />
+          <Route path="/projects/proj0" element={<Proj0 />} />
+        </Routes>
       </main>
-      <Footer />
     </div>
   );
 };
