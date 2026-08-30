@@ -44,11 +44,11 @@ const Proj0 = () => {
         <div className="image-row">
           <ImagePlaceholder
             label="Close-up selfie (distorted)"
-            src="/proj0/selfie-close.jpg"
+            src={`${import.meta.env.BASE_URL}proj0/selfie-close.jpg`}
           />
           <ImagePlaceholder
             label="Stepped-back + zoomed selfie"
-            src="/proj0/selfie-far.jpg"
+            src={`${import.meta.env.BASE_URL}proj0/selfie-far.jpg`}
           />
         </div>
         <p className="proj0-caption">
@@ -61,11 +61,11 @@ const Proj0 = () => {
         <div className="image-row">
           <ImagePlaceholder
             label="Zoomed in from a distance"
-            src="/proj0/building-zoomed.jpg"
+            src={`${import.meta.env.BASE_URL}proj0/building-zoomed.jpg`}
           />
           <ImagePlaceholder
             label="Walked up, no zoom"
-            src="/proj0/building-walked-up.jpg"
+            src={`${import.meta.env.BASE_URL}proj0/building-walked-up.jpg`}
           />
         </div>
         <p className="proj0-caption">
@@ -81,7 +81,7 @@ const Proj0 = () => {
         <div className="image-row">
           <ImagePlaceholder
             label="Dolly zoom GIF"
-            src="/proj0/dolly-zoom.GIF"
+            src={`${import.meta.env.BASE_URL}proj0/dolly-zoom.GIF`}
             contain
           />
         </div>
