@@ -54,7 +54,7 @@ const Proj0 = () => {
           />
         </div>
         <p className="proj0-caption">
-          When we're looking up close at something our eyes distort it, but when we step back we can see it more clearly. This is whats happening with the camera as well.
+          Credit to my roommate Daniel, who is pictured above. When we're looking up close at something our eyes distort it, but when we step back we can see it more clearly. This is whats happening with the camera as well.
         </p>
       </section>
 
