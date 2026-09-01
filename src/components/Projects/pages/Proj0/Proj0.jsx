@@ -45,10 +45,12 @@ const Proj0 = () => {
           <ImagePlaceholder
             label="Close-up selfie (distorted)"
             src={`${import.meta.env.BASE_URL}proj0/selfie-close.JPG`}
+            contain
           />
           <ImagePlaceholder
             label="Stepped-back + zoomed selfie"
             src={`${import.meta.env.BASE_URL}proj0/selfie-far.JPG`}
+            contain
           />
         </div>
         <p className="proj0-caption">
