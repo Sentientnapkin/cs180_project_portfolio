@@ -44,11 +44,11 @@ const Proj0 = () => {
         <div className="image-row">
           <ImagePlaceholder
             label="Close-up selfie (distorted)"
-            src={`${import.meta.env.BASE_URL}proj0/selfie-close.jpg`}
+            src={`${import.meta.env.BASE_URL}proj0/selfie-close.JPG`}
           />
           <ImagePlaceholder
             label="Stepped-back + zoomed selfie"
-            src={`${import.meta.env.BASE_URL}proj0/selfie-far.jpg`}
+            src={`${import.meta.env.BASE_URL}proj0/selfie-far.JPG`}
           />
         </div>
         <p className="proj0-caption">
