@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import "./Proj0.css";
+import "./Proj.css";
 
 const ImagePlaceholder = ({ label, src, contain }) => {
   const [loaded, setLoaded] = useState(true);
@@ -9,7 +9,7 @@ const ImagePlaceholder = ({ label, src, contain }) => {
   if (src && loaded) {
     return (
       <img
-        className={contain ? "proj0-image proj0-image--contain" : "proj0-image"}
+        className={contain ? "proj-image proj-image--contain" : "proj-image"}
         src={src}
         alt={label}
         onError={() => setLoaded(false)}
@@ -26,20 +26,20 @@ const ImagePlaceholder = ({ label, src, contain }) => {
 
 const Proj0 = () => {
   return (
-    <article className="proj0">
+    <article className="proj">
       <Link to="/" className="back-link">
         <FaArrowLeft /> Back to projects
       </Link>
 
-      <header className="proj0-header">
-        <p className="proj0-eyebrow">CS 180 &middot; Project 0</p>
+      <header className="proj-header">
+        <p className="proj-eyebrow">CS 180 &middot; Project 0</p>
         <h1>Becoming Friends with Your Camera</h1>
-        <p className="proj0-subtitle">
+        <p className="proj-subtitle">
           The goal of this project is to get some intuitive understanding of the somewhat subtle relationship between perspective, focal length/zoom, and the center of projection.
         </p>
       </header>
 
-      <section className="proj0-section">
+      <section className="proj-section">
         <h2>Part 1 &middot; Selfie: The Wrong Way vs. The Right Way</h2>
         <div className="image-row">
           <ImagePlaceholder
@@ -53,12 +53,12 @@ const Proj0 = () => {
             contain
           />
         </div>
-        <p className="proj0-caption">
+        <p className="proj-caption">
           Credit to my roommate Daniel, who is pictured above. When we're looking up close at something our eyes distort it, but when we step back we can see it more clearly. This is whats happening with the camera as well.
         </p>
       </section>
 
-      <section className="proj0-section">
+      <section className="proj-section">
         <h2>Part 2 &middot; Architectural Perspective Compression</h2>
         <div className="image-row">
           <ImagePlaceholder
@@ -70,12 +70,12 @@ const Proj0 = () => {
             src={`${import.meta.env.BASE_URL}proj0/building-walked-up.jpg`}
           />
         </div>
-        <p className="proj0-caption">
+        <p className="proj-caption">
           The zoomed in shot compresses the depth in the image, whereas the shot from closer shows more of the depth.
         </p>
       </section>
 
-      <section className="proj0-section">
+      <section className="proj-section">
         <h2>Part 3 &middot; The Dolly Zoom</h2>
         <p>
           By moving the camera backwards while zooming in to keep the stuffed animals in the same position, I created a dolly zoom!
@@ -89,7 +89,7 @@ const Proj0 = () => {
         </div>
       </section>
 
-      <footer className="proj0-footer">
+      <footer className="proj-footer">
         <Link to="/" className="back-link">
           <FaArrowLeft /> Back to projects
         </Link>

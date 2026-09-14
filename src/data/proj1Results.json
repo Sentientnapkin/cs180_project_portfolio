@@ -1,0 +1,607 @@
+[
+  {
+    "slug": "cathedral",
+    "title": "Cathedral",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-cathedral.jpg",
+        "green": [
+          2,
+          5
+        ],
+        "red": [
+          3,
+          12
+        ],
+        "seconds": 0.65
+      },
+      "l2": {
+        "image": "proj1/multi-l2-cathedral.jpg",
+        "green": [
+          2,
+          5
+        ],
+        "red": [
+          1,
+          10
+        ],
+        "seconds": 0.17
+      }
+    },
+    "single": {
+      "ncc": {
+        "image": "proj1/single-ncc-cathedral.jpg",
+        "green": [
+          2,
+          5
+        ],
+        "red": [
+          3,
+          12
+        ],
+        "seconds": 0.66
+      },
+      "l2": {
+        "image": "proj1/single-l2-cathedral.jpg",
+        "green": [
+          2,
+          5
+        ],
+        "red": [
+          1,
+          10
+        ],
+        "seconds": 0.15
+      }
+    }
+  },
+  {
+    "slug": "monastery",
+    "title": "Monastery",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-monastery.jpg",
+        "green": [
+          2,
+          -3
+        ],
+        "red": [
+          2,
+          3
+        ],
+        "seconds": 0.65
+      },
+      "l2": {
+        "image": "proj1/multi-l2-monastery.jpg",
+        "green": [
+          2,
+          -3
+        ],
+        "red": [
+          2,
+          3
+        ],
+        "seconds": 0.15
+      }
+    },
+    "single": {
+      "ncc": {
+        "image": "proj1/single-ncc-monastery.jpg",
+        "green": [
+          2,
+          -3
+        ],
+        "red": [
+          2,
+          3
+        ],
+        "seconds": 0.66
+      },
+      "l2": {
+        "image": "proj1/single-l2-monastery.jpg",
+        "green": [
+          2,
+          -3
+        ],
+        "red": [
+          2,
+          3
+        ],
+        "seconds": 0.16
+      }
+    }
+  },
+  {
+    "slug": "tobolsk",
+    "title": "Tobolsk",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-tobolsk.jpg",
+        "green": [
+          2,
+          3
+        ],
+        "red": [
+          3,
+          6
+        ],
+        "seconds": 0.67
+      },
+      "l2": {
+        "image": "proj1/multi-l2-tobolsk.jpg",
+        "green": [
+          2,
+          3
+        ],
+        "red": [
+          3,
+          6
+        ],
+        "seconds": 0.16
+      }
+    },
+    "single": {
+      "ncc": {
+        "image": "proj1/single-ncc-tobolsk.jpg",
+        "green": [
+          2,
+          3
+        ],
+        "red": [
+          3,
+          6
+        ],
+        "seconds": 0.71
+      },
+      "l2": {
+        "image": "proj1/single-l2-tobolsk.jpg",
+        "green": [
+          2,
+          3
+        ],
+        "red": [
+          3,
+          6
+        ],
+        "seconds": 0.16
+      }
+    }
+  },
+  {
+    "slug": "church",
+    "title": "Church",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-church.jpg",
+        "green": [
+          -5,
+          -1
+        ],
+        "red": [
+          -6,
+          53
+        ],
+        "seconds": 4.08
+      },
+      "l2": {
+        "image": "proj1/multi-l2-church.jpg",
+        "green": [
+          -4,
+          23
+        ],
+        "red": [
+          -10,
+          56
+        ],
+        "seconds": 1.32
+      }
+    }
+  },
+  {
+    "slug": "emir",
+    "title": "Emir",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-emir.jpg",
+        "green": [
+          10,
+          34
+        ],
+        "red": [
+          18,
+          107
+        ],
+        "seconds": 3.99
+      },
+      "l2": {
+        "image": "proj1/multi-l2-emir.jpg",
+        "green": [
+          10,
+          34
+        ],
+        "red": [
+          18,
+          106
+        ],
+        "seconds": 1.3
+      }
+    }
+  },
+  {
+    "slug": "harvesters",
+    "title": "Harvesters",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-harvesters.jpg",
+        "green": [
+          10,
+          59
+        ],
+        "red": [
+          7,
+          120
+        ],
+        "seconds": 3.97
+      },
+      "l2": {
+        "image": "proj1/multi-l2-harvesters.jpg",
+        "green": [
+          10,
+          59
+        ],
+        "red": [
+          7,
+          120
+        ],
+        "seconds": 1.35
+      }
+    }
+  },
+  {
+    "slug": "icon",
+    "title": "Icon",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-icon.jpg",
+        "green": [
+          16,
+          42
+        ],
+        "red": [
+          22,
+          90
+        ],
+        "seconds": 4.06
+      },
+      "l2": {
+        "image": "proj1/multi-l2-icon.jpg",
+        "green": [
+          16,
+          42
+        ],
+        "red": [
+          22,
+          89
+        ],
+        "seconds": 1.39
+      }
+    }
+  },
+  {
+    "slug": "ilemselga",
+    "title": "Ilemselga",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-ilemselga.jpg",
+        "green": [
+          -4,
+          39
+        ],
+        "red": [
+          -7,
+          110
+        ],
+        "seconds": 4.09
+      },
+      "l2": {
+        "image": "proj1/multi-l2-ilemselga.jpg",
+        "green": [
+          -4,
+          39
+        ],
+        "red": [
+          -7,
+          110
+        ],
+        "seconds": 1.38
+      }
+    }
+  },
+  {
+    "slug": "melons",
+    "title": "Melons",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-melons.jpg",
+        "green": [
+          4,
+          83
+        ],
+        "red": [
+          7,
+          174
+        ],
+        "seconds": 4.06
+      },
+      "l2": {
+        "image": "proj1/multi-l2-melons.jpg",
+        "green": [
+          4,
+          83
+        ],
+        "red": [
+          7,
+          175
+        ],
+        "seconds": 1.35
+      }
+    }
+  },
+  {
+    "slug": "religious-painting",
+    "title": "Religious Painting",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-religious-painting.jpg",
+        "green": [
+          3,
+          25
+        ],
+        "red": [
+          7,
+          69
+        ],
+        "seconds": 4.53
+      },
+      "l2": {
+        "image": "proj1/multi-l2-religious-painting.jpg",
+        "green": [
+          3,
+          25
+        ],
+        "red": [
+          7,
+          69
+        ],
+        "seconds": 1.41
+      }
+    }
+  },
+  {
+    "slug": "self-portrait",
+    "title": "Self Portrait",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-self-portrait.jpg",
+        "green": [
+          -1,
+          70
+        ],
+        "red": [
+          -3,
+          162
+        ],
+        "seconds": 3.99
+      },
+      "l2": {
+        "image": "proj1/multi-l2-self-portrait.jpg",
+        "green": [
+          -1,
+          70
+        ],
+        "red": [
+          -3,
+          162
+        ],
+        "seconds": 1.28
+      }
+    }
+  },
+  {
+    "slug": "siren",
+    "title": "Siren",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-siren.jpg",
+        "green": [
+          -7,
+          48
+        ],
+        "red": [
+          -21,
+          98
+        ],
+        "seconds": 4.21
+      },
+      "l2": {
+        "image": "proj1/multi-l2-siren.jpg",
+        "green": [
+          -7,
+          48
+        ],
+        "red": [
+          -20,
+          100
+        ],
+        "seconds": 1.34
+      }
+    }
+  },
+  {
+    "slug": "three-generations",
+    "title": "Three Generations",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-three-generations.jpg",
+        "green": [
+          5,
+          52
+        ],
+        "red": [
+          7,
+          109
+        ],
+        "seconds": 4.0
+      },
+      "l2": {
+        "image": "proj1/multi-l2-three-generations.jpg",
+        "green": [
+          5,
+          52
+        ],
+        "red": [
+          7,
+          109
+        ],
+        "seconds": 1.34
+      }
+    }
+  },
+  {
+    "slug": "wharf",
+    "title": "Wharf",
+    "custom": false,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-wharf.jpg",
+        "green": [
+          -7,
+          15
+        ],
+        "red": [
+          -17,
+          83
+        ],
+        "seconds": 4.03
+      },
+      "l2": {
+        "image": "proj1/multi-l2-wharf.jpg",
+        "green": [
+          -7,
+          15
+        ],
+        "red": [
+          -17,
+          83
+        ],
+        "seconds": 1.28
+      }
+    }
+  },
+  {
+    "slug": "parovoz-kompaund",
+    "title": "Parovoz \"Kompaund\" s paroperegrivatelem Shmidta",
+    "custom": true,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-parovoz-kompaund.jpg",
+        "green": [
+          -2,
+          41
+        ],
+        "red": [
+          2,
+          94
+        ],
+        "seconds": 4.09
+      },
+      "l2": {
+        "image": "proj1/multi-l2-parovoz-kompaund.jpg",
+        "green": [
+          -2,
+          41
+        ],
+        "red": [
+          2,
+          96
+        ],
+        "seconds": 1.4
+      }
+    }
+  },
+  {
+    "slug": "monastyrskoe-sudno",
+    "title": "Monastyrskoe sudno. Etiud. [Solovetskie ostrova]",
+    "custom": true,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-monastyrskoe-sudno.jpg",
+        "green": [
+          10,
+          31
+        ],
+        "red": [
+          19,
+          109
+        ],
+        "seconds": 4.14
+      },
+      "l2": {
+        "image": "proj1/multi-l2-monastyrskoe-sudno.jpg",
+        "green": [
+          10,
+          31
+        ],
+        "red": [
+          19,
+          111
+        ],
+        "seconds": 1.36
+      }
+    }
+  },
+  {
+    "slug": "dvor-bashkira",
+    "title": "Dvor bashkira. [Ekh'ia]",
+    "custom": true,
+    "multi": {
+      "ncc": {
+        "image": "proj1/multi-ncc-dvor-bashkira.jpg",
+        "green": [
+          -13,
+          45
+        ],
+        "red": [
+          -17,
+          99
+        ],
+        "seconds": 4.09
+      },
+      "l2": {
+        "image": "proj1/multi-l2-dvor-bashkira.jpg",
+        "green": [
+          -13,
+          45
+        ],
+        "red": [
+          -17,
+          99
+        ],
+        "seconds": 1.38
+      }
+    }
+  }
+]

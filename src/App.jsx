@@ -4,6 +4,7 @@ import About from "./components/About/About";
 import Navbar from "./components/Navbar/Navbar";
 import Projects from "./components/Projects/Projects";
 import Proj0 from "./components/Projects/pages/Proj0/Proj0";
+import Proj1 from "./components/Projects/pages/Proj0/Proj1";
 import "./App.css";
 const App = () => {
   const [theme, setTheme] = useState("light");
@@ -40,6 +41,7 @@ const App = () => {
             }
           />
           <Route path="/projects/proj0" element={<Proj0 />} />
+          <Route path="/projects/proj1" element={<Proj1 />} />
         </Routes>
       </main>
     </div>

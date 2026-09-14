@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tif
+*.tiff
+public/proj1/full-resolution/
 
 # Editor directories and files
 .vscode/*

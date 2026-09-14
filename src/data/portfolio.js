@@ -14,6 +14,12 @@ const projects = {
       description:
         "Becoming Friends with Your Camera",
     },
+    {
+      title: "Project 1",
+      slug: "proj1",
+      short: "Images of the Russian Empire",
+      description: "Colorizing the Prokudin-Gorskii photo collection"
+    }
   ],
 };
 
