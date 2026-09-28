@@ -1,0 +1,138 @@
+.proj2-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: -1rem 0 3rem;
+  padding: 1rem;
+  border: 1px solid rgba(127, 127, 127, 0.22);
+  border-radius: 12px;
+  background: rgba(127, 127, 127, 0.05);
+}
+
+.proj2-toc a {
+  padding: 0.45rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(114, 47, 55, 0.1);
+  color: var(--wine);
+  font-size: 0.84rem;
+  font-weight: 650;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.proj2-toc a:hover {
+  background: var(--wine);
+  color: white;
+}
+
+.proj2-writing-placeholder {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1.6rem;
+}
+
+.proj2-writing-placeholder strong {
+  color: var(--wine);
+  font-style: normal;
+}
+
+.proj2-code-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.proj2-code-block {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(127, 127, 127, 0.24);
+  border-radius: 12px;
+  background: rgba(20, 20, 24, 0.96);
+  color: #f2f1f4;
+}
+
+.proj2-code-block h4 {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.proj2-code-block pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  tab-size: 4;
+}
+
+.proj2-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.15rem;
+  margin: 1.25rem 0 2.25rem;
+  align-items: start;
+}
+
+.proj2-card figcaption {
+  justify-content: flex-start;
+}
+
+.proj2-card .proj-image {
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
+.proj2-input-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.proj2-stack-table {
+  display: grid;
+  gap: 1.5rem;
+  margin: 1.25rem 0 2.25rem;
+}
+
+.proj2-stack-level h4 {
+  margin: 0 0 0.65rem;
+  color: var(--wine);
+  font-size: 0.9rem;
+}
+
+.proj2-stack-images {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.proj2-stack-images .result {
+  margin: 0;
+}
+
+.proj2-placeholder {
+  min-height: 220px;
+  aspect-ratio: 4 / 3;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.proj2-placeholder strong {
+  color: var(--wine);
+  font-style: normal;
+}
+
+.proj2-placeholder span {
+  max-width: 22ch;
+}
+
+.proj2 > .proj-section {
+  scroll-margin-top: 2rem;
+}
+
+@media (max-width: 700px) {
+  .proj2-input-grid,
+  .proj2-stack-images {
+    grid-template-columns: 1fr;
+  }
+}

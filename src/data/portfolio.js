@@ -19,6 +19,12 @@ const projects = {
       slug: "proj1",
       short: "Images of the Russian Empire",
       description: "Colorizing the Prokudin-Gorskii photo collection"
+    },
+    {
+      title: "Project 2",
+      slug: "proj2",
+      short: "Fun with Filters and Frequencies!",
+      description: "Convolutions, frequencies, hybrid images, and multiresolution blending"
     }
   ],
 };
