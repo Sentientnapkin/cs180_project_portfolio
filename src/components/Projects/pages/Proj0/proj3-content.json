@@ -1,0 +1,750 @@
+[
+  {
+    "id": "a-1-1",
+    "title": "A 1.1 · Constructing Noisy Training Inputs",
+    "figures": [
+      {
+        "src": "parta/training_inputs.png",
+        "label": "training inputs"
+      }
+    ],
+    "equations": [
+      "xₜ = (1 − t)ε + tx₁,    ε ∼ N(0, I)"
+    ],
+    "missing": [],
+    "writing": "Most of our work with diffusion models and flow models work around the idea of noise - how do I use noise to create images. Well as a part of that, I treat noise as part of our process in creating our complete output images. For this process, I will have different amount of noise in our images and I have to show how to represent them in this way. Our job here is to combine our images with noise, and to do that, I interpolate with our real image and our noise image. Please enjoy seeing this picture of June's Pizza's incredible cheese pizza for the forseeable future.",
+    "references": []
+  },
+  {
+    "id": "a-1-2",
+    "title": "A 1.2 · Classical Denoising",
+    "figures": [
+      {
+        "src": "parta/blur_0.25.png",
+        "label": "blur 0.25"
+      },
+      {
+        "src": "parta/blur_0.5.png",
+        "label": "blur 0.5"
+      },
+      {
+        "src": "parta/blur_0.75.png",
+        "label": "blur 0.75"
+      }
+    ],
+    "equations": [
+      "x̂₁ = Gσ(xₜ / t)"
+    ],
+    "missing": [],
+    "writing": "For our classical denoising, I will be taking an image with noise on it and using a gaussian low pass filter. The reason this works is our noise has a bunch of high pass frequencies that we're trying to get rid of. By taking our low pass filter and smoothing out the image, I average out the noise as well and get something closer to our underlying image.",
+    "references": []
+  },
+  {
+    "id": "a-1-3",
+    "title": "A 1.3 · One-Step Denoising",
+    "figures": [
+      {
+        "src": "parta/one_step_0.25.png",
+        "label": "one step 0.25"
+      },
+      {
+        "src": "parta/one_step_0.5.png",
+        "label": "one step 0.5"
+      },
+      {
+        "src": "parta/one_step_0.75.png",
+        "label": "one step 0.75"
+      }
+    ],
+    "equations": [
+      "x̂₁ = xₜ + (1 − t)vθ(xₜ, t, c)"
+    ],
+    "missing": [],
+    "writing": "Now we're taking a more advanced look at our denoising process. We're going to use a velocity function. If I had our noise x_0 and our appropriate output image x_1, our velocity function defines the direction given by x_1 - x_0. Now sometimes I dont have the exact measurements, so I learn a velocity function based on our intermediate step, which I define as x_t given a timestep t from [0, 1] (which comes from our linear interpolation). With our velocity function, if I step our x_t in the direction of our velocity (scaled appropriately by 1-t) to get closer to our final output image. The below images take the one step shown in our equation to denoise the image.",
+    "references": []
+  },
+  {
+    "id": "a-1-4",
+    "title": "A 1.4 · Visualizing Velocity",
+    "figures": [
+      {
+        "src": "parta/velocity_original.png",
+        "label": "velocity original"
+      },
+      {
+        "src": "parta/velocity_0.25.png",
+        "label": "velocity 0.25"
+      },
+      {
+        "src": "parta/velocity_0.50.png",
+        "label": "velocity 0.50"
+      },
+      {
+        "src": "parta/velocity_0.75.png",
+        "label": "velocity 0.75"
+      }
+    ],
+    "equations": [
+      "vgt = x₁ − ε",
+      "Eₜ = √meanRGB(((1 − t)(v̂ₜ − vgt))²)"
+    ],
+    "missing": [],
+    "writing": "We're now going to look at what our actual velocity looks like for our denoising process. I define our ground truth velocity as the difference between our actual image and our noise, and I use the RGB RMS norm of the image to show the difference between our predicted velocity and our ground truth velocitiy. For different timestep values as you can see below, I calculate our predicted and ground truth velocities, and see the differences between the two. It's interesting to note that as our image is less noisy, I tend to have a more accurate predicted velocity measurement.",
+    "references": []
+  },
+  {
+    "id": "a-1-5",
+    "title": "A 1.5 · Euler Sampling",
+    "figures": [
+      {
+        "src": "parta/trajectory.png",
+        "label": "trajectory"
+      },
+      {
+        "src": "parta/comparison.png",
+        "label": "comparison"
+      }
+    ],
+    "equations": [
+      "xₜ₊ₕ = xₜ + hvθ(xₜ, t, c),    h = 0.02"
+    ],
+    "missing": [],
+    "writing": "One step denoising can be innacurate because the learned velocity changes as I move along the path. Instead, I will take a small step, predict a new velocity, and repeat. This uses euler integration (see the equation below). Using this I found a better ability to appropriately denoise the image, as our function of velocity changes with time and I follow it more appropriately!",
+    "references": []
+  },
+  {
+    "id": "a-1-6",
+    "title": "A 1.6 · Generating Images from Noise",
+    "figures": [
+      {
+        "src": "parta/conditional_samples.png",
+        "label": "conditional samples"
+      }
+    ],
+    "equations": [
+      "seed ∈ {180, 181, 182, 183, 184}"
+    ],
+    "missing": [],
+    "writing": "Well now that I have a stronger ability to follow our velocity trajectories to get to real images, lets see what happens when I start our trajectory from some random noise! I followed the process in part A 1.5 to use euler integration to denoise the images using the prompt \"a high quality photo\" as our condition for our velocity. In doing so I generated these outputs, and created real images from just noise!",
+    "references": []
+  },
+  {
+    "id": "a-2-1",
+    "title": "A 2.1 · Classifier-Free Guidance",
+    "figures": [
+      {
+        "src": "parta/cfg_samples.png",
+        "label": "cfg samples"
+      }
+    ],
+    "equations": [
+      "vCFG = vc + w(vc − vu),    w = 7"
+    ],
+    "missing": [],
+    "writing": "Our images are nice and interesting, but they still have some of those weird AI oddifies we've all learned to recognize. In order to improve on this, we're going to use Classifier-Free Guidance. When evaluating an image and time, use a conditional prompt and an empty prompt, and then combinei them. This gives us a weighted combination of our conditional velocity and our unconditional velocity which will strengthen the effect of the prompt. Using this velocity function and euler steps size 0.02 using the same seeds and prompts from the previous section, we get these images which look signifcantly more natural.",
+    "references": []
+  },
+  {
+    "id": "a-3-1",
+    "title": "A 3.1 · Image-to-Image Editing",
+    "figures": [
+      {
+        "src": "parta/edit_campanile.png",
+        "label": "edit campanile"
+      },
+      {
+        "src": "parta/edit_my_image_1.png",
+        "label": "edit June's Pizza"
+      },
+      {
+        "src": "parta/edit_my_image_2.png",
+        "label": "edit Antelope Canyon"
+      },
+      {
+        "src": "parta/edit_web_image.png",
+        "label": "edit Gyarados"
+      },
+      {
+        "src": "parta/edit_drawing_1.png",
+        "label": "edit Basketball Drawing"
+      },
+      {
+        "src": "parta/edit_drawing_2.png",
+        "label": "edit Jurassic Park Drawing"
+      }
+    ],
+    "equations": [
+      "tstart ∈ {0.02, 0.04, 0.06, 0.10, 0.14, 0.25, 0.50}"
+    ],
+    "missing": [],
+    "writing": "Now as we go into Image-to-Image editing, we're going to start with this example of the campanile. We first do the forward process to get a noisy picture of the Campanile (with low enough noise levels), and then run our euler integration to force it back to the manifold of natural images with a generic photo prompt. We do that for the given starting t's with our images below and here are the results for each starting point!",
+    "references": []
+  },
+  {
+    "id": "a-3-2",
+    "title": "A 3.2 · Text-Guided Image Editing",
+    "figures": [
+      {
+        "src": "parta/text_edit_campanile.png",
+        "label": "text edit campanile"
+      },
+      {
+        "src": "parta/text_edit_my_image_1.png",
+        "label": "text edit June's Pizza"
+      },
+      {
+        "src": "parta/text_edit_my_image_2.png",
+        "label": "text edit Antelope Canyon"
+      }
+    ],
+    "equations": [],
+    "missing": [],
+    "writing": "We do a similar process as the previous section, but instead of using a generic prompt for our image editing, we use a more specific prompt! For example, we use the conversion of Campanile to a skyscraper in a large city. See the rest below!",
+    "references": []
+  },
+  {
+    "id": "a-3-3",
+    "title": "A 3.3 · Visual Anagrams",
+    "figures": [
+      {
+        "src": "parta/anagram_views_0.png",
+        "label": "anagram 1"
+      },
+      {
+        "src": "parta/anagram_views_1.png",
+        "label": "anagram 2"
+      }
+    ],
+    "equations": [
+      "v = ½[vCFG(xₜ, t, ca) + F(vCFG(F(xₜ), t, cb))]"
+    ],
+    "missing": [],
+    "writing": "For this section, we are creating visual anagrams to create optical illusions with flow models. We first make an image, but then make the image have a whole new meaning when you turn it upside down. To do this, we have to change how we define our velocity (which you will see in practice below). Our first velocity is going to be the same as normal, with our specific prompt and some pure noise. Our second velocity is going to use input rotated 180 degrees, and will then have the entire velocity be flipped. By averaging these two, the image itself averages between the two conditions (but with one of the conditions being flipped 180 degrees) to create the anagrams you can see below!",
+    "references": []
+  },
+  {
+    "id": "a-3-4",
+    "title": "A 3.4 · Hybrid Images",
+    "figures": [
+      {
+        "src": "parta/hybrid_0.png",
+        "label": "Greek Democratic Meeting | Field of Flowers"
+      },
+      {
+        "src": "parta/hybrid_1.png",
+        "label": "Butterfly | Pumpkin Pie"
+      }
+    ],
+    "equations": [
+      "v = lowpass(va) + vb − lowpass(vb)"
+    ],
+    "missing": [],
+    "writing": "Next we will be doing something similar, where instead of using flipped velocities we will only be consider high or low frequencies of our velocities. If you remember back to Project 2, we combined images' high frequency and low frequency components to create hybrid images. By doing this with our velocity, we will instead get a much cleaner output using our flow models! ",
+    "references": []
+  },
+  {
+    "id": "b-1-1",
+    "title": "B 1.1 · Implementing the UNet",
+    "figures": [],
+    "equations": [],
+    "missing": [],
+    "writing": "For this section, we will in fact be implementing a UNet from scratch. The main idea behind a UNet is that we want to implement a system that learns by encoding an image somehow and then decoding it to create the initial image again. The diagram for how we do this is shown below (taken from the course website page) where we then also define our own convolution blocks and other operations. The simple idea is the same as you trace through the diagram though, we down sample our image with convolution blocks, and then build them back up to create our output image. We will be using the MNIST dataset for this section.",
+    "references": [
+      {
+        "src": "assignment/unconditional_arch.png",
+        "label": "Unconditional UNet architecture",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/unconditional_arch.png"
+      },
+      {
+        "src": "assignment/atomic_ops_new.png",
+        "label": "Standard UNet operations",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/atomic_ops_new.png"
+      }
+    ]
+  },
+  {
+    "id": "b-1-2",
+    "title": "B 1.2 · Noising Process",
+    "figures": [
+      {
+        "src": "partb/notebook/cell_14_output_00.png",
+        "label": "σ = 0.0"
+      },
+      {
+        "src": "partb/notebook/cell_14_output_01.png",
+        "label": "σ = 0.2"
+      },
+      {
+        "src": "partb/notebook/cell_14_output_02.png",
+        "label": "σ = 0.4"
+      },
+      {
+        "src": "partb/notebook/cell_14_output_03.png",
+        "label": "σ = 0.5"
+      },
+      {
+        "src": "partb/notebook/cell_14_output_04.png",
+        "label": "σ = 0.6"
+      },
+      {
+        "src": "partb/notebook/cell_14_output_05.png",
+        "label": "σ = 0.8"
+      },
+      {
+        "src": "partb/notebook/cell_14_output_06.png",
+        "label": "σ = 1.0"
+      }
+    ],
+    "equations": [
+      "z = x + σε"
+    ],
+    "missing": [],
+    "writing": "To noise our image, we simply added some noise to our training data and trained on those. Here are some examples of what this looked like (our noise was sampled from a normal gaussian).",
+    "references": []
+  },
+  {
+    "id": "b-1-2-1",
+    "title": "B 1.2.1 · Training a Denoiser",
+    "figures": [
+      {
+        "src": "partb/denoise_unet_loss.png",
+        "label": "Denoising UNet · training loss"
+      }
+    ],
+    "equations": [
+      "L = E[‖Dθ(z) − x‖²]"
+    ],
+    "missing": [],
+    "writing": "For our denoiser, we used the above noising method for our input data, noising every image with sigma = 0.5 for this specific denoiser. We then optimize with the loss function below, essentially saying that we want our denoised outputs to be as close as possible to our original inputs. You can see our loss below, and then our performance on out of distribution data below. ",
+    "references": [],
+    "trainingSettings": [
+      {
+        "label": "Dataset",
+        "value": "MNIST · training split"
+      },
+      {
+        "label": "Image size",
+        "value": "28 × 28"
+      },
+      {
+        "label": "Hidden channels",
+        "value": "128"
+      },
+      {
+        "label": "Batch size",
+        "value": "256"
+      },
+      {
+        "label": "Optimizer",
+        "value": "Adam"
+      },
+      {
+        "label": "Learning rate",
+        "value": "10⁻⁴"
+      },
+      {
+        "label": "Epochs",
+        "value": "5"
+      },
+      {
+        "label": "Training input",
+        "value": "x + 0.5ε"
+      },
+      {
+        "label": "Loss",
+        "value": "Mean squared error"
+      },
+      {
+        "label": "Scheduler",
+        "value": "None"
+      }
+    ]
+  },
+  {
+    "id": "b-1-2-2",
+    "title": "B 1.2.2 · Out-of-Distribution Testing",
+    "figures": [
+      {
+        "src": "partb/denoising_epoch_1.png",
+        "label": "Epoch 1 · σ ∈ {0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0}"
+      },
+      {
+        "src": "partb/denoising_epoch_5.png",
+        "label": "Epoch 5 · σ ∈ {0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0}"
+      }
+    ],
+    "equations": [],
+    "missing": [],
+    "writing": "Our out of distribution data refers to our performance on different noising levels. Our denoiser was trained on sigma = 0.5, so what does it do with data that we noise by different amounts. You can see the results in the table below. The first row is the data, then after that for each group of two rows we first have the noised data, and then the data denoised from the denoiser. ",
+    "references": []
+  },
+  {
+    "id": "b-1-2-3",
+    "title": "B 1.2.3 · Denoising Pure Noise",
+    "figures": [
+      {
+        "src": "partb/pure_noise_loss.png",
+        "label": "Pure-noise denoiser · training loss"
+      },
+      {
+        "src": "partb/pure_noise_testing.png",
+        "label": "Test digits · Gaussian noise · epochs 1 and 5"
+      }
+    ],
+    "equations": [],
+    "missing": [],
+    "writing": "Now we have a new challenge, what happens if we try and denoise just pure noise, nothing underlying in the input data. As you can see from our loss function, we don't really learn to optimize anything. If you look at our testing, we show first the input test data, then the pure noise input, and then the denoiser at 1 epoch and 5 epochs. As you can see, we don't have a strong result from this section. The independent noise has no information about the actual underlying digit. With an MSE training loss, the optimal prediction gets to a mean training image as oppossed to a distinct digit. Because of this, our denoiser doesn't display a true image, rather aiming towards some messed up mean of the training images that looks like junk.",
+    "references": [],
+    "trainingSettings": [
+      {
+        "label": "Dataset",
+        "value": "MNIST · training split"
+      },
+      {
+        "label": "Image size",
+        "value": "28 × 28"
+      },
+      {
+        "label": "Hidden channels",
+        "value": "128"
+      },
+      {
+        "label": "Batch size",
+        "value": "256"
+      },
+      {
+        "label": "Optimizer",
+        "value": "Adam"
+      },
+      {
+        "label": "Learning rate",
+        "value": "10⁻⁴"
+      },
+      {
+        "label": "Epochs",
+        "value": "5"
+      },
+      {
+        "label": "Training input",
+        "value": "ε ∼ N(0, I)"
+      },
+      {
+        "label": "Loss",
+        "value": "Mean squared error"
+      },
+      {
+        "label": "Scheduler",
+        "value": "None"
+      }
+    ]
+  },
+  {
+    "id": "b-2-1",
+    "title": "B 2.1 · Time-Conditioned UNet",
+    "figures": [],
+    "equations": [
+      "xₜ = (1 − t)x₀ + tx₁,    uₜ = x₁ − x₀"
+    ],
+    "missing": [],
+    "writing": "In order to solve this problem, we're going to introduce a Time-Conditioned UNet. This is a flow model like how we were talking about earlier! We are going to train our model to optimize for a velocity function. Architecturally this looks pretty similar to our UNet, but there's one big difference in the red box. We also input time into our system (in the shape of a time tensor) and we put it through a small MLP to create an embedding of our time tensor. This is then element-wise multiplied into our network, and it allows us to condition on time.",
+    "references": [
+      {
+        "src": "assignment/conditional_arch_fm.png",
+        "label": "Conditioned UNet architecture",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/conditional_arch_fm.png"
+      },
+      {
+        "src": "assignment/fc_long.png",
+        "label": "FCBlock",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/fc_long.png"
+      }
+    ]
+  },
+  {
+    "id": "b-2-2",
+    "title": "B 2.2 · Training the Time-Conditioned UNet",
+    "figures": [
+      {
+        "src": "partb/Denoising_TC_Unet_loss.png",
+        "label": "Denoising TC Unet loss"
+      }
+    ],
+    "equations": [
+      "L = E[‖uθ(xₜ, t) − (x₁ − x₀)‖²]"
+    ],
+    "missing": [],
+    "writing": "For our training, our loss function is on the expectation of the MSE of our predicted velocity and the true velocity. Our training algorithm is shown below (as seen on the course website). When we ran training we saw that we were able to learn the velocity quite well (as seen by the loss function). Another thing witih this training is that we're going to use a scheduler on our optimizer to drop our learning rate. Our learning rate starts at 1e-2, and it deteriorates exponentially. ",
+    "references": [
+      {
+        "src": "assignment/algo1_t_only_fm.png",
+        "label": "Algorithm B.1 · Training a time-conditioned UNet",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/algo1_t_only_fm.png"
+      }
+    ],
+    "trainingSettings": [
+      {
+        "label": "Dataset",
+        "value": "MNIST · training split"
+      },
+      {
+        "label": "Image size",
+        "value": "28 × 28"
+      },
+      {
+        "label": "Hidden channels",
+        "value": "64"
+      },
+      {
+        "label": "Batch size",
+        "value": "64"
+      },
+      {
+        "label": "Optimizer",
+        "value": "Adam"
+      },
+      {
+        "label": "Learning rate",
+        "value": "10⁻² · initial"
+      },
+      {
+        "label": "Epochs",
+        "value": "10"
+      },
+      {
+        "label": "LR scheduler",
+        "value": "Exponential · γ = 0.1¹⁄¹⁰"
+      },
+      {
+        "label": "Time sampling",
+        "value": "t ∼ U(0, 1)"
+      },
+      {
+        "label": "Training target",
+        "value": "x₁ − x₀"
+      },
+      {
+        "label": "Loss",
+        "value": "Mean squared error"
+      },
+      {
+        "label": "LR update",
+        "value": "After each epoch"
+      }
+    ]
+  },
+  {
+    "id": "b-2-3",
+    "title": "B 2.3 · Sampling the Time-Conditioned UNet",
+    "figures": [
+      {
+        "src": "partb/sample_unet_noise_testing.png",
+        "label": "Epochs 1, 5, 10"
+      }
+    ],
+    "equations": [],
+    "missing": [],
+    "writing": "When sampling our data, with which we have the algorithm below, we are going to perform iterative denoising on our noise to get our output using our learned velocity function. The outputs of this are seen below, where as you go lower you get more epochs of training done.",
+    "references": [
+      {
+        "src": "assignment/algo2_t_only_fm.png",
+        "label": "Algorithm B.2 · Sampling a time-conditioned UNet",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/algo2_t_only_fm.png"
+      }
+    ]
+  },
+  {
+    "id": "b-2-4",
+    "title": "B 2.4 · Class-Conditioned UNet",
+    "figures": [],
+    "equations": [
+      "c ∈ {0, …, 9},    puncond = 0.1"
+    ],
+    "missing": [],
+    "writing": "Our last model wasn't bad so far, but now we want to improve further. To do this we will be using a Class-Conditioned UNet, which will also have the class embedded into our network.",
+    "references": []
+  },
+  {
+    "id": "b-2-5",
+    "title": "B 2.5 · Training the Class-Conditioned UNet",
+    "figures": [
+      {
+        "src": "partb/denoising_class_conditinoed_loss.png",
+        "label": "Class-conditioned UNet · training loss"
+      }
+    ],
+    "equations": [],
+    "missing": [],
+    "writing": "The training algorithm used is displayed below, which takes the gradient with respect to our error function. Note that for this, we're also going to have the scheduler from the previous section as well as puncond, which is going to be a probability determining our dropout for our class conditioned UNet (so that we can pass in an empty class vector and treat it like an unconditioned output).",
+    "references": [
+      {
+        "src": "assignment/algo3_c_fm.png",
+        "label": "Algorithm B.3 · Training a class-conditioned UNet",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/algo3_c_fm.png"
+      }
+    ],
+    "trainingSettings": [
+      {
+        "label": "Dataset",
+        "value": "MNIST · training split"
+      },
+      {
+        "label": "Image size",
+        "value": "28 × 28"
+      },
+      {
+        "label": "Hidden channels",
+        "value": "64"
+      },
+      {
+        "label": "Batch size",
+        "value": "64"
+      },
+      {
+        "label": "Optimizer",
+        "value": "Adam"
+      },
+      {
+        "label": "Learning rate",
+        "value": "10⁻² · initial"
+      },
+      {
+        "label": "Epochs",
+        "value": "10"
+      },
+      {
+        "label": "LR scheduler",
+        "value": "Exponential · γ = 0.1¹⁄¹⁰"
+      },
+      {
+        "label": "Time sampling",
+        "value": "t ∼ U(0, 1)"
+      },
+      {
+        "label": "Training target",
+        "value": "x₁ − x₀"
+      },
+      {
+        "label": "Loss",
+        "value": "Mean squared error"
+      },
+      {
+        "label": "LR update",
+        "value": "After each epoch"
+      },
+      {
+        "label": "Digit classes",
+        "value": "0–9 · one-hot"
+      },
+      {
+        "label": "Class dropout",
+        "value": "0.1"
+      }
+    ]
+  },
+  {
+    "id": "b-2-6",
+    "title": "B 2.6 · Sampling the Class-Conditioned UNet",
+    "figures": [
+      {
+        "src": "partb/class_guidance_testing.png",
+        "label": "Epochs 1, 5, 10 · four instances per digit"
+      }
+    ],
+    "equations": [],
+    "missing": [],
+    "writing": "When sampling our UNet, we use the sampling algorithm below. Note that we use V_CFG like we did in project 1! The results from sampling using iteration, much like our time-conditioned unet, are shown below. ",
+    "references": [
+      {
+        "src": "assignment/algo4_c_fm.png",
+        "label": "Algorithm B.4 · Sampling a class-conditioned UNet",
+        "source": "https://cal-cs180.github.io/fa26/hw/proj3-flow/partb.html",
+        "original": "https://cal-cs180.github.io/fa26/hw/proj3-flow/assets/algo4_c_fm.png"
+      }
+    ]
+  },
+  {
+    "id": "b-no-scheduler",
+    "title": "B 2.6 · Without a Learning Rate Scheduler",
+    "figures": [
+      {
+        "src": "partb/denoising_cc_unet_no_schedule.png",
+        "label": "Without scheduler · training loss"
+      },
+      {
+        "src": "partb/testing_cc_unet_no_schedule.png",
+        "label": "Without scheduler · epochs 1, 5, 10"
+      }
+    ],
+    "equations": [
+      "η = 10⁻³"
+    ],
+    "missing": [],
+    "writing": "Note that simplicity is definitely preferred, and the scheduler is kind of annoying. In order to account for removing the scheduler for some training, I changed the learning rate to 1e-3 to be lower than previously and ran the training algorithm again. With this I stil go good results and was able to appropriately train the flow model still.",
+    "references": [],
+    "trainingSettings": [
+      {
+        "label": "Dataset",
+        "value": "MNIST · training split"
+      },
+      {
+        "label": "Image size",
+        "value": "28 × 28"
+      },
+      {
+        "label": "Hidden channels",
+        "value": "64"
+      },
+      {
+        "label": "Batch size",
+        "value": "64"
+      },
+      {
+        "label": "Optimizer",
+        "value": "Adam"
+      },
+      {
+        "label": "Learning rate",
+        "value": "10⁻³ · constant"
+      },
+      {
+        "label": "Epochs",
+        "value": "10"
+      },
+      {
+        "label": "LR scheduler",
+        "value": "None"
+      },
+      {
+        "label": "Time sampling",
+        "value": "t ∼ U(0, 1)"
+      },
+      {
+        "label": "Training target",
+        "value": "x₁ − x₀"
+      },
+      {
+        "label": "Loss",
+        "value": "Mean squared error"
+      },
+      {
+        "label": "LR update",
+        "value": "—"
+      },
+      {
+        "label": "Digit classes",
+        "value": "0–9 · one-hot"
+      },
+      {
+        "label": "Class dropout",
+        "value": "0.1"
+      }
+    ]
+  }
+]

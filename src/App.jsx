@@ -6,6 +6,7 @@ import Projects from "./components/Projects/Projects";
 import Proj0 from "./components/Projects/pages/Proj0/Proj0";
 import Proj1 from "./components/Projects/pages/Proj0/Proj1";
 import Proj2 from "./components/Projects/pages/Proj0/Proj2";
+import Proj3 from "./components/Projects/pages/Proj0/Proj3";
 import "./App.css";
 const App = () => {
   const [theme, setTheme] = useState("light");
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/projects/proj0" element={<Proj0 />} />
           <Route path="/projects/proj1" element={<Proj1 />} />
           <Route path="/projects/proj2" element={<Proj2 />} />
+          <Route path="/projects/proj3" element={<Proj3 />} />
         </Routes>
       </main>
     </div>

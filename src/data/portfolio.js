@@ -25,6 +25,12 @@ const projects = {
       slug: "proj2",
       short: "Fun with Filters and Frequencies!",
       description: "Convolutions, frequencies, hybrid images, and multiresolution blending"
+    },
+    {
+      title: "Project 3",
+      slug: "proj3",
+      short: "Fun with Flow Models",
+      description: "Fun with Flow Models"
     }
   ],
 };
