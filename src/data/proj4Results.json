@@ -1,0 +1,67 @@
+{
+  "correspondences": [
+    {
+      "title": "Oracle Arena",
+      "visualization": "oracle_left_oracle_right_correspondences.png"
+    },
+    {
+      "title": "Chile",
+      "visualization": "chile-1_chile-2_correspondences.png"
+    },
+    {
+      "title": "Memorial Stadium",
+      "visualization": "memorial_left_memorial_right_correspondences.png"
+    }
+  ],
+  "rectifications": [
+    "brick_building",
+    "giants_sunset",
+    "window_sunset"
+  ],
+  "mosaics": [
+    {
+      "title": "Memorial",
+      "sources": [
+        "memorial_left",
+        "memorial_right"
+      ],
+      "result": "Memorial_Mosaic.jpg"
+    },
+    {
+      "title": "Chile",
+      "sources": [
+        "chile-1",
+        "chile-2"
+      ],
+      "result": "Chile_Mosaic.jpg"
+    },
+    {
+      "title": "Salesforce",
+      "sources": [
+        "salesforce-1",
+        "salesforce-2",
+        "salesforce-3",
+        "salesforce-4",
+        "salesforce-5"
+      ],
+      "result": "Salesforce_Mosaic.jpg"
+    },
+    {
+      "title": "Giants",
+      "sources": [
+        "giants-1",
+        "giants-2"
+      ],
+      "result": "Giants_Mosaic.jpg"
+    },
+    {
+      "title": "Chase Center",
+      "sources": [
+        "chase-1",
+        "chase-2",
+        "chase-3"
+      ],
+      "result": "Chase_Mosaic.jpg"
+    }
+  ]
+}

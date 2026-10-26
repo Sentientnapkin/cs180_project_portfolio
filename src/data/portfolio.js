@@ -31,6 +31,12 @@ const projects = {
       slug: "proj3",
       short: "Fun with Flow Models",
       description: "Fun with Flow Models"
+    },
+    {
+      title: "Project 4",
+      slug: "proj4",
+      short: "Image Warping and Mosaicing",
+      description: "Homographies, image rectification, and blended panoramas"
     }
   ],
 };
