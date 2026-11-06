@@ -5,16 +5,81 @@ import "./Proj4.css";
 
 const asset = (name) => `${import.meta.env.BASE_URL}proj4/${name}`;
 
-function Figure({ file, caption, className = "" }) {
+const partBExamples = [
+  {
+    title: "Memorial Stadium",
+    pair: "memorial_left_memorial_right",
+    manual: "Memorial_Mosaic.jpg",
+    corners: "Red points cover the sky, stands, and foreground crowd.",
+    anms: "The remaining points are spread from the sky down to the stands.",
+    descriptors: "The patches show smooth gradients alongside sharper edges.",
+    matches: "Matches run across the field, stands, and streaks in the sky.",
+    matchedDescriptors: "Several pairs share a broad light-to-dark transition.",
+    manualCaption: "The field runs beneath a wide wedge of sky.",
+    autoCaption: "The field still lines up, with a different tilt at the outer edges.",
+  },
+  {
+    title: "Chile",
+    pair: "chile-1_chile-2",
+    manual: "Chile_Mosaic.jpg",
+    corners: "Red points are dense along the seating tiers and foreground crowd.",
+    anms: "The selected points leave the pitch and seating tiers easier to see.",
+    descriptors: "Several patches show horizontal bands or blocky textures.",
+    matches: "Many lines connect points along the stands and pitch.",
+    matchedDescriptors: "Several pairs share horizontal stripes or sharp edges.",
+    manualCaption: "The seating tiers and pitch extend across the two views.",
+    autoCaption: "The seating tiers align with a slightly different slope along the top edge.",
+  },
+  {
+    title: "Oracle Arena",
+    pair: "oracle_left_oracle_right",
+    manual: "Oracle_Mosaic.jpg",
+    corners: "Red points almost cover both views of the arena.",
+    anms: "The ceiling lights, scoreboard, and crowd are visible between the points.",
+    descriptors: "Bright bars and small blocks stand out against darker patches.",
+    matches: "Many matches cross the ceiling lights and scoreboard area.",
+    matchedDescriptors: "Bright bands and blocks recur in several pairs.",
+    manualCaption: "The scoreboard sits above the joined crowd and court.",
+    autoCaption: "The scoreboard and seating line up with a different outline on the left.",
+  },
+];
+
+const partBMosaics = [
+  ...partBExamples,
+  {
+    title: "Salesforce",
+    manual: "Salesforce_Mosaic.jpg",
+    manualCaption: "The skyline spans five photos, with a steep warp on the left.",
+    autoCaption: "The skyline and waterfront line up, with a gentler warp on the left.",
+  },
+  {
+    title: "Chase Center",
+    manual: "Chase_Mosaic.jpg",
+    manualCaption: "The court spans the frame, with some ghosting in the crowd.",
+    autoCaption: "The seating tiers line up across all three views, with some foreground ghosting.",
+  },
+];
+
+const partBSettings = [
+  ["Harris", "ε = 10⁻⁶, σ = 1 px", "1 px peak spacing · 20 px border discard"],
+  ["ANMS", "500 corners max per image · c = 0.9", "Ranked by squared distance to the nearest stronger corner"],
+  ["Descriptors", "40 × 40 px → 8 × 8 · Gaussian σ = 1.1 px", "Axis-aligned, sampled every 5 px · subtract mean, divide by std + 10⁻⁸"],
+  ["Matching", "Best / second-best < 0.7", "Squared Euclidean distance"],
+  ["RANSAC", "4 matches per trial · 10,000 trials per pair", "Inlier error < 5 px · refit on the best trial’s inliers"],
+  ["Stitching", "Middle photo as reference · bilinear interpolation", "Edge feathering with a minimum weight of 10⁻⁸"],
+  ["Figures", "10 descriptors per image · up to 10 matched pairs", "Grayscale display range −2 to +2"],
+];
+
+function Figure({ file, caption, alt = caption, className = "" }) {
   return (
     <figure className={`proj4-figure ${className}`}>
       <a
         href={asset(file)}
         target="_blank"
         rel="noreferrer"
-        aria-label={`Open full image: ${caption}`}
+        aria-label={`Open full image: ${alt}`}
       >
-        <img src={asset(file)} alt={caption} loading="lazy" />
+        <img src={asset(file)} alt={alt} loading="lazy" />
       </a>
       <figcaption>{caption}</figcaption>
     </figure>
@@ -29,7 +94,7 @@ export default function Proj4() {
       </Link>
 
       <header className="proj-header">
-        <p className="proj-eyebrow">CS 180 · Project 4 · Part A</p>
+        <p className="proj-eyebrow">CS 180 · Project 4 · Parts A and B</p>
         <h1>Image Warping &amp; Mosaicing</h1>
 
         {/* Introduction write-up */}
@@ -43,6 +108,10 @@ export default function Proj4() {
         <a href="#a2">A.2 · Homographies</a>
         <a href="#a3">A.3 · Rectification</a>
         <a href="#a4">A.4 · Mosaics</a>
+        <a href="#b1">B.1 · Harris &amp; ANMS</a>
+        <a href="#b2">B.2 · Descriptors</a>
+        <a href="#b3">B.3 · Matching</a>
+        <a href="#b4">B.4 · Automatic Mosaics</a>
       </nav>
 
       {/* A.1 — Source photographs */}
@@ -636,6 +705,134 @@ M(p) = 0                    otherwise`}</code>
             This has the most ghosting, and its interesting to see it in this example.
           </p>
         </section>
+      </section>
+      <h2>Part B · Feature Matching for Autostitching</h2>
+
+      {/* B.1 — Harris corners before and after ANMS */}
+      <section id="b1" className="proj-section">
+        <h2>B.1 · Harris Corner Detection</h2>
+        <p className="proj4-placeholder">
+            Transitioning to part B of this project, we aim to perform feature extraction to automatically create the correspondances we took for granted in part A. In order to do this we will be using
+            a simplified version of the algorithm outlined in Multi-Image Matching using Multi-Scale Oriented Patches by Brown et al. To begin, we will be using Harris corners to extract candidates as features to use for correspondances.
+        </p>
+        <Figure
+          className="proj4-harris-equations"
+          file="partb/harris-equations.png"
+          caption="The structure tensor, its eigenvalues, and the Harris score used here."
+          alt="Structure tensor M from weighted gradient outer products, its eigenvalues (trace(M) ± √(trace(M)² − 4 det(M))) / 2, and the corner score 2 det(M) / (trace(M) + epsilon)."
+        />
+        <p>
+          We use the above calculations to define our intensity from our harris corners and we pick the largest local peaks along our image in order to get the below harris corners on our images, which you can see below. Note that since our photos are large and our harris corners recognize any large changes in intensity we find lots and lots of harris corners that we're going to have to filter through.
+        </p>
+        <p>
+          Then, we use an algorithm called ANMS to pick up to 500 of our harris corners (500 is just a number we chose).
+          For each corner, we find how far away the closest corner with a noticeably higher score is (0.9 times its score has to exceed our current corner’s score). We call that distance its radius.
+          We keep the corners with the largest radii so our points are spread out across the image. You can visualize this in the images below.
+        </p>
+        {partBExamples.map(({ title, pair, corners, anms }) => (
+          <section className="proj4-example" key={pair}>
+            <h3>{title}</h3>
+            <div className="proj4-partb-grid">
+              <Figure
+                file={`partb/${pair}_harris_corners.png`}
+                caption={`Harris corners · ${corners}`}
+                alt={`${title} with all detected Harris corners overlaid`}
+              />
+              <Figure
+                file={`partb/${pair}_harris_corners_anms.png`}
+                caption={`After ANMS · ${anms}`}
+                alt={`${title} with ANMS-selected Harris corners overlaid`}
+              />
+            </div>
+          </section>
+        ))}
+      </section>
+
+      {/* B.2 — Normalized feature descriptors */}
+      <section id="b2" className="proj-section">
+        <h2>B.2 · Feature Descriptor Extraction</h2>
+        <p className="proj4-placeholder">
+          We next go with our harris corners and turn them into features. We go about this by, for each feature, taking a 40 x 40 image patch, blurring it, then subsampling it down to an 8x8 feature.
+          You can see 10 example features from each image below.
+        </p>
+        {partBExamples.map(({ title, pair, descriptors }) => (
+          <section className="proj4-example" key={pair}>
+            <h3>{title}</h3>
+            <Figure
+              file={`partb/${pair}_feature_descriptors.png`}
+              caption={descriptors}
+              alt={`Normalized 8×8 feature descriptors from ${title}`}
+            />
+          </section>
+        ))}
+      </section>
+
+      {/* B.3 — Feature matches and their descriptors */}
+      <section id="b3" className="proj-section">
+        <h2>B.3 · Feature Matching</h2>
+        <p className="proj4-placeholder">
+          Once we have our features, we have to match them accordingly. More specifically we want the most distinct features. We turn each feature into a length 64 vector and use squared Euclidean distance to compare it to features in the other image.
+          Then, we take the ratio of the closest match to the second closest match. If the difference is substantial (we use a threshold for the ratio between the two), we are confident that we have a correct match and can use that as a feature pair between our two images.
+          You can see the results from this below.
+        </p>
+        {partBExamples.map(({ title, pair, matches, matchedDescriptors }) => (
+          <section className="proj4-example" key={pair}>
+            <h3>{title}</h3>
+            <Figure
+              file={`partb/${pair}_feature_matches.png`}
+              caption={matches}
+              alt={`Lines connecting matched features across the ${title} image pair`}
+            />
+            <Figure
+              file={`partb/${pair}_matching_descriptors.png`}
+              caption={matchedDescriptors}
+              alt={`Examples of matching 8×8 descriptors from ${title}`}
+            />
+          </section>
+        ))}
+      </section>
+
+      {/* B.4 — Manual and automatic mosaics */}
+      <section id="b4" className="proj-section">
+        <h2>B.4 · RANSAC and Automatic Mosaics</h2>
+        <p className="proj4-placeholder">
+          Then finally, we perform a RANSAC algorithm to create our homographies to create our mosaics. Simply put, we randomly choose 4 feature correspondances. With those 4 features, we create a homography matrix like we do in part A and then change all of our points in one image with that homography.
+          We then measure how far each transformed point is from its match. If the error is under 5 pixels, we count that match as an inlier.
+          After 10,000 trials, we take the trial with the most inliers and use all of its inliers to recompute the homography. Then we use the same stitching process as in Part A.
+        </p>
+        <div className="proj4-settings">
+          <table>
+            <caption>Part B settings</caption>
+            <tbody>
+              {partBSettings.map(([step, values, detail]) => (
+                <tr key={step}>
+                  <th scope="row">{step}</th>
+                  <td>
+                    <span>{values}</span>
+                    <small>{detail}</small>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {partBMosaics.map(({ title, manual, manualCaption, autoCaption }) => (
+          <section className="proj4-example" key={title}>
+            <h3>{title}</h3>
+            <div className="proj4-partb-grid">
+              <Figure
+                file={manual}
+                caption={`Manual · ${manualCaption}`}
+                alt={`Manually stitched ${title} mosaic`}
+              />
+              <Figure
+                file={`partb/${title}_mosaic.jpg`}
+                caption={`Automatic · ${autoCaption}`}
+                alt={`Automatically stitched ${title} mosaic`}
+              />
+            </div>
+          </section>
+        ))}
       </section>
     </article>
   );

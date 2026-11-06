@@ -84,11 +84,18 @@
   text-underline-offset: 3px;
 }
 
-.proj4-comparison-grid {
+.proj4-comparison-grid,
+.proj4-partb-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin: 1.5rem 0;
+}
+
+@media (max-width: 650px) {
+  .proj4-partb-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .proj4-comparison-grid img {
@@ -109,4 +116,55 @@
   .proj4-comparison-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.proj4-harris-equations {
+  display: block;
+  width: min(100%, 34rem);
+  height: auto;
+  margin: 1.5rem auto;
+}
+
+#dark .proj4-harris-equations img {
+  filter: invert(1);
+}
+
+.proj4-settings {
+  max-width: 44rem;
+  margin: 2rem auto;
+}
+
+.proj4-settings table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+  line-height: 1.45;
+}
+
+.proj4-settings caption {
+  padding: .75rem clamp(.65rem, 2.5vw, 1.1rem);
+  border-radius: 10px 10px 0 0;
+  background: rgba(127, 127, 127, .1);
+  text-align: left;
+  font-weight: 650;
+}
+
+.proj4-settings th,
+.proj4-settings td {
+  padding: .65rem clamp(.65rem, 2.5vw, 1.1rem);
+  border-bottom: 1px solid rgba(127, 127, 127, .17);
+  text-align: left;
+  vertical-align: top;
+}
+
+.proj4-settings th {
+  width: 23%;
+  font-weight: 600;
+}
+
+.proj4-settings td small {
+  display: block;
+  margin-top: .12rem;
+  font-size: .84em;
+  opacity: .75;
 }
